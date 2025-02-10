@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebasechat/core/utils/route_utils.dart';
 import 'package:firebasechat/firebase_options.dart';
+import 'package:firebasechat/ui/screens/splashscreens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -18,11 +19,7 @@ class MainApp extends StatelessWidget {
     return ScreenUtilInit(
       builder: (context,child)=> MaterialApp(
         onGenerateRoute: RouteUtils.onGenerateRoute,
-        home: Scaffold(
-          body: Center(
-            child: Text('Hello World!'),
-          ),
-        ),
+        home: SplashScreen(),
       ),
     );
   }
