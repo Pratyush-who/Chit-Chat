@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); 
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform); 
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MainApp());
 }
 
@@ -17,7 +17,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      builder: (context,child)=> MaterialApp(
+      builder: (context, child) => MaterialApp(
+        debugShowCheckedModeBanner: false,
         onGenerateRoute: RouteUtils.onGenerateRoute,
         home: SplashScreen(),
       ),
