@@ -2,7 +2,7 @@
     <uses-sdk android:minSdkVersion="23" />
 
     <application
-        android:label="firebasechat"
+        android:label="VOXA"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
