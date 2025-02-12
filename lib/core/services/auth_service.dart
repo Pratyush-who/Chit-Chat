@@ -5,21 +5,24 @@ class AuthService {
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   Future<User?> login(String email, String password) async {
-    try {
-      final userCredential = await auth.signInWithEmailAndPassword(
-          email: email, password: password);
-
-      if (userCredential.user != null) {
-        log("User logged in..!!");
-        return userCredential.user; // Corrected return statement
-      }
-    } on FirebaseAuthException catch (e) {
-      log(e.message!);
-    } catch (e) {
-      log(e.toString());
+  try {
+    final userCredential = await auth.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    if (userCredential.user != null) {
+      log("User logged in..!!");
+      return userCredential.user;
     }
-    return null;
+  } on FirebaseAuthException catch (e) {
+    log(e.message!);
+    rethrow; // Rethrow the exception to handle it in the ViewModel
+  } catch (e) {
+    log(e.toString());
+    rethrow; // Rethrow the exception to handle it in the ViewModel
   }
+  return null; // Explicitly return null if login fails
+}
 
   Future<void> logout() async {
     try {
