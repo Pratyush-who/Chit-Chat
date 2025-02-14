@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebasechat/core/constants/strings.dart';
+import 'package:firebasechat/core/enums/enums.dart';
 import 'package:firebasechat/core/extension/snackbar.dart';
 import 'package:firebasechat/core/services/auth_service.dart';
 import 'package:firebasechat/ui/screens/auth/login%20page/login_view_model.dart';
@@ -62,11 +63,13 @@ class Login extends StatelessWidget {
                   SizedBox(height: 35),
                   CustomButton(
                     content: "Sign In",
+                    loading: model.state == ViewState.loading,
                     onPressed: () async {
                       try {
                         bool success = await model.Login();
                         if (success) {
                           context.showSnackbar("Login Successful!");
+                          Navigator.pushReplacementNamed(context, home);
                         } else {
                           context.showSnackbar(
                               "Login failed. Please check your credentials.");

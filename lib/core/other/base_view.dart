@@ -6,7 +6,7 @@ class BaseView extends ChangeNotifier {
 
   ViewState get state => _state;
 
-  StepState(ViewState state) {
+  setstate(ViewState state) {
     _state = state;
     notifyListeners();
   }

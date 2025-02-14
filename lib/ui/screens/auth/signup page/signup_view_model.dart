@@ -1,21 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebasechat/core/enums/enums.dart';
 import 'package:firebasechat/core/other/base_view.dart';
 import 'package:firebasechat/core/services/auth_service.dart';
-import 'package:firebasechat/ui/screens/auth/signup%20page/signup.dart';
 import 'package:flutter/material.dart';
 
 class SignupViewModel extends BaseView {
   final AuthService auth;
 
-   SignupViewModel(this.auth);
+  SignupViewModel(this.auth);
 
   String name = "";
+  String email = "";
   String password = "";
   String cnfpassword = "";
-  String email = "";
 
   void setname(String value) {
-    email = value;
+    name = value;
     notifyListeners();
   }
 
@@ -25,29 +25,35 @@ class SignupViewModel extends BaseView {
   }
 
   void setpassword(String value) {
-    email = value;
-    notifyListeners();
-  }
-
-  setcnfpassword(String value) {
     password = value;
     notifyListeners();
   }
 
-  Signup() async {
-     try {
-    User? user = await auth.signup(email, password);
-    if (user != null) {
-      return true; // Success
-    } else {
-      return false; // Failure
-    }
-  } on FirebaseAuthException catch (e) {
-    debugPrint("FirebaseAuthException: ${e.message}");
-    rethrow;
-  } catch (e) {
-    debugPrint("Error: ${e.toString()}");
-    rethrow;
+  void setcnfpassword(String value) {
+    cnfpassword = value;
+    notifyListeners();
   }
+
+  Future<bool> Signup() async {
+    setstate(ViewState.loading);
+    try {
+      if (password != cnfpassword) {
+        debugPrint("Passwords do not match");
+        setstate(ViewState.idle);
+        return false;
+      }
+
+      User? user = await auth.signup(email, password);
+      setstate(ViewState.idle);
+      return user != null;
+    } on FirebaseAuthException catch (e) {
+      debugPrint("FirebaseAuthException: ${e.message}");
+      setstate(ViewState.idle);
+      return false;
+    } catch (e) {
+      debugPrint("Error: ${e.toString()}");
+      setstate(ViewState.idle);
+      return false;
+    }
   }
 }

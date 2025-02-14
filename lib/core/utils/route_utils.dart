@@ -3,6 +3,7 @@ import 'package:firebasechat/ui/screens/auth/login%20page/login.dart';
 import 'package:firebasechat/ui/screens/auth/signup%20page/signup.dart';
 import 'package:firebasechat/ui/screens/home/home_screen.dart';
 import 'package:firebasechat/ui/screens/splashscreens/splash_screen.dart';
+import 'package:firebasechat/ui/screens/wrapper/wrapper.dart';
 import 'package:flutter/material.dart';
 
 class RouteUtils {
@@ -17,6 +18,8 @@ class RouteUtils {
         return MaterialPageRoute(builder: (context) => Login());
       case home:
         return MaterialPageRoute(builder: (context) => HomeScreen());
+      case wrapper:
+        return MaterialPageRoute(builder: (context) => Wrapper());
       default:
         return MaterialPageRoute(
           builder: (context) => Scaffold(

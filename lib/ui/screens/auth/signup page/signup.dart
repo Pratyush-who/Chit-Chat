@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebasechat/core/constants/strings.dart';
+import 'package:firebasechat/core/enums/enums.dart';
 import 'package:firebasechat/core/extension/snackbar.dart';
 import 'package:firebasechat/core/services/auth_service.dart';
 import 'package:firebasechat/ui/screens/auth/signup%20page/signup_view_model.dart';
@@ -77,11 +78,13 @@ class Signup extends StatelessWidget {
                   SizedBox(height: 35),
                   CustomButton(
                     content: "Sign Up",
+                    loading: model.state == ViewState.loading,
                     onPressed: () async {
                       try {
                         bool success = await model.Signup();
                         if (success) {
                           context.showSnackbar("Account Created Successfully!");
+                          Navigator.pop(context);
                         } else {
                           context.showSnackbar(
                               "Login failed. Please check your credentials.");
