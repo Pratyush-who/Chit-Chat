@@ -7,8 +7,8 @@ import 'package:firebasechat/ui/screens/wrapper/wrapper.dart';
 import 'package:flutter/material.dart';
 
 class RouteUtils {
-
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
+    final args = settings.arguments;
     switch (settings.name) {
       case splash:
         return MaterialPageRoute(builder: (context) => SplashScreen());
@@ -17,7 +17,10 @@ class RouteUtils {
       case login:
         return MaterialPageRoute(builder: (context) => Login());
       case home:
-        return MaterialPageRoute(builder: (context) => HomeScreen());
+        return MaterialPageRoute(
+            builder: (context) => HomeScreen(
+                  uid: args as String,
+                ));
       case wrapper:
         return MaterialPageRoute(builder: (context) => Wrapper());
       default:

@@ -3,6 +3,7 @@ import 'package:firebasechat/core/constants/strings.dart';
 import 'package:firebasechat/core/enums/enums.dart';
 import 'package:firebasechat/core/extension/snackbar.dart';
 import 'package:firebasechat/core/services/auth_service.dart';
+import 'package:firebasechat/core/services/db_services.dart';
 import 'package:firebasechat/ui/screens/auth/signup%20page/signup_view_model.dart';
 import 'package:firebasechat/ui/widgets/customButton.dart';
 import 'package:firebasechat/ui/widgets/cutsomTextField.dart';
@@ -16,7 +17,7 @@ class Signup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<SignupViewModel>(
-      create: (context) => SignupViewModel(AuthService()),
+      create: (context) => SignupViewModel(AuthService(),dbServices()),
       child: Consumer<SignupViewModel>(builder: (context, model, _) {
         return Scaffold(
           body: SingleChildScrollView(
