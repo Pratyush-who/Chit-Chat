@@ -11,11 +11,11 @@ class UserProvider extends ChangeNotifier {
   UserModel? get user => currentUser;
 
   loadUser(String uid) async {
-    print("Fetching user data for UID: $uid"); // ✅ Debugging
+    print("Fetching user data for UID: $uid"); 
     final userData = await database.loadUser(uid);
 
     if (userData != null) {
-      print("User data fetched: $userData"); // ✅ Check if data is received
+      print("User data fetched: $userData");
       currentUser = UserModel.fromMap(userData);
       notifyListeners();
     } else {

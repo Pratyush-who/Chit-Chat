@@ -21,14 +21,14 @@ class HomeScreen extends StatelessWidget {
             child: Consumer<UserProvider>(
               builder: (context, userProvider, _) {
                 if (userProvider.user == null) {
-                  return const CircularProgressIndicator(); // ⏳ Still loading
+                  return const CircularProgressIndicator();
                 }
                 return InkWell(
                   onTap: () {
                     AuthService().logout();
                   },
                   child: Text(userProvider.user
-                      .toString()), // ✅ Should now show user data
+                      .toString()),
                 );
               },
             ),

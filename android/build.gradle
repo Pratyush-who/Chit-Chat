@@ -4,7 +4,9 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.google.gms:google-services:4.3.15' // Ensuring a single version
+        classpath 'com.android.tools.build:gradle:8.2.1'
+        classpath 'com.google.gms:google-services:4.4.0'  // Required for Firebase
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.22"  // Required for Kotlin
     }
 }
 
@@ -19,10 +21,7 @@ rootProject.buildDir = "../build"
 
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
-}
-
-subprojects {
-    project.evaluationDependsOn(":app")
+    project.evaluationDependsOn(":app")  // Merged this inside subprojects block
 }
 
 tasks.register("clean", Delete) {
