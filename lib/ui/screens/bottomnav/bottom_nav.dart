@@ -1,5 +1,7 @@
 import 'package:firebasechat/ui/screens/bottomnav/bottom_nav_viewmodel.dart';
 import 'package:firebasechat/ui/screens/bottomnav/chats_list/chats_list_screen.dart';
+import 'package:firebasechat/ui/screens/bottomnav/profile/ProfileScreen.dart';
+import 'package:firebasechat/ui/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -8,9 +10,9 @@ class BottomNav extends StatelessWidget {
   BottomNav({super.key});
 
   static final List<Widget> screens = [
-    const Text('data'),
+    const HomeScreen(),
     const ChatListScreen(),
-    const Text('Ganduabcbsaicb'),
+    const ProfileScreen(),
   ];
 
   @override
@@ -20,7 +22,7 @@ class BottomNav extends StatelessWidget {
       child: Consumer<BottomNavViewmodel>(builder: (context, model, _) {
         return Scaffold(
           body: BottomNav.screens[model.currInd],
-          backgroundColor: Colors.blueGrey,
+          backgroundColor: const Color(0xFF121212),
           bottomNavigationBar: Container(
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.only(
@@ -29,7 +31,10 @@ class BottomNav extends StatelessWidget {
               ),
               boxShadow: [
                 BoxShadow(
-                    color: Colors.black38, spreadRadius: 2, blurRadius: 10)
+                  color: Colors.black.withOpacity(0.3),
+                  spreadRadius: 2,
+                  blurRadius: 15,
+                )
               ],
             ),
             child: ClipRRect(
@@ -39,9 +44,9 @@ class BottomNav extends StatelessWidget {
               ),
               child: BottomNavigationBar(
                 elevation: 25,
-                backgroundColor: Colors.black87,
-                selectedItemColor: Colors.white, // Selected icon color
-                unselectedItemColor: Colors.grey, // Unselected icon color
+                backgroundColor: const Color(0xFF1E1E1E),
+                selectedItemColor: Colors.blueAccent,
+                unselectedItemColor: Colors.grey[600],
                 currentIndex: model.currInd,
                 onTap: model.setIndex,
                 items: [
@@ -50,7 +55,10 @@ class BottomNav extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 8.0),
                       child: FaIcon(
                         FontAwesomeIcons.home,
-                        color: model.currInd == 0 ? Colors.white : Colors.grey,
+                        color: model.currInd == 0 
+                            ? Colors.blueAccent 
+                            : Colors.grey[600],
+                        size: 22,
                       ),
                     ),
                     label: "Home",
@@ -60,7 +68,10 @@ class BottomNav extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 8.0),
                       child: FaIcon(
                         FontAwesomeIcons.comments,
-                        color: model.currInd == 1 ? Colors.white : Colors.grey,
+                        color: model.currInd == 1 
+                            ? Colors.blueAccent 
+                            : Colors.grey[600],
+                        size: 22,
                       ),
                     ),
                     label: "Chats",
@@ -69,8 +80,11 @@ class BottomNav extends StatelessWidget {
                     icon: Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: FaIcon(
-                        FontAwesomeIcons.user,
-                        color: model.currInd == 2 ? Colors.white : Colors.grey,
+                        FontAwesomeIcons.userAstronaut,
+                        color: model.currInd == 2 
+                            ? Colors.blueAccent 
+                            : Colors.grey[600],
+                        size: 22,
                       ),
                     ),
                     label: "Profile",
