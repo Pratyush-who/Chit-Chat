@@ -3,5 +3,12 @@
 *.cpp linguist-vendored
 *.h linguist-vendored
 CMakeLists.txt linguist-vendored
+
+# Ignore platform-specific directories
 android/ linguist-vendored
 ios/ linguist-vendored
+
+# Ignore build artifacts
+build/ linguist-vendored
+.dart_tool/ linguist-vendored
+.pub-cache/ linguist-vendored
