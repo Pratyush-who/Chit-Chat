@@ -29,6 +29,7 @@ class HomeScreen extends StatelessWidget {
                   },
                   child: Text(userProvider.user
                       .toString()),
+                      
                 );
               },
             ),

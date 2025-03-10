@@ -5,6 +5,6 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('data'),);
+    return Center(child: Text('data',style: TextStyle(color: Colors.pinkAccent),),);
   }
 }

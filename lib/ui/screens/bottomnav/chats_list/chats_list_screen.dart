@@ -14,81 +14,127 @@ class _ChatsListScreenState extends State<ChatListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF121212),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, ),
-        child: Column(
-          children: [
-            SizedBox(height: 40,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Chats',
-                  style: GoogleFonts.poppins(
-                    fontSize: 26,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.add_comment_outlined,
-                      color: Colors.blueAccent),
-                  onPressed: () {},
-                )
-              ],
-            ),
-            18.verticalSpace,
-            TextField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                hintText: 'Search messages...',
-                hintStyle: TextStyle(color: Colors.white70),
-                prefixIcon: const Icon(Icons.search, color: Colors.white),
-                filled: true,
-                fillColor: Colors.grey[800],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-            18.verticalSpace,
-            Expanded(
-              child: ListView.separated(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.zero,
-                itemCount: 10,
-                separatorBuilder: (context, index) => Divider(
-                  color: Colors.grey[800],
-                  height: 1,
-                  indent: 70,
-                ),
-                itemBuilder: (context, index) => ListTile(
-                  contentPadding: const EdgeInsets.symmetric(vertical: 8),
-                  leading: CircleAvatar(
-                    radius: 26,
-                    backgroundColor: Colors.blueAccent.withOpacity(0.2),
-                    child: const Icon(Icons.person, color: Colors.blueAccent),
-                  ),
-                  title: Text(
-                    'John Doe',
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Column(
+            children: [
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Chats',
                     style: GoogleFonts.poppins(
+                      fontSize: 28,
+                      fontWeight: FontWeight.w600,
                       color: Colors.white,
-                      fontWeight: FontWeight.w500,
                     ),
                   ),
-                  subtitle: Text(
-                    'Hey, how are you?',
-                    style: GoogleFonts.poppins(
-                      color: Colors.grey[400],
-                      fontSize: 13,
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF2C2C2E),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.add_comment_outlined,
+                        color: Color(0xFF4B9AFE), 
+                      ),
+                      onPressed: () {},
+                    ),
+                  )
+                ],
+              ),
+              20.verticalSpace,
+              Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFF1E1E1E), 
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(color: const Color(0xFF303030), width: 1),
+                ),
+                child: TextField(
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    hintText: 'Search messages...',
+                    hintStyle: GoogleFonts.poppins(
+                      color: const Color(0xFF8E8E93),
+                      fontSize: 14,
+                    ),
+                    prefixIcon: const Icon(Icons.search, color: Color(0xFF8E8E93)),
+                    filled: false,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 14),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: BorderSide.none,
                     ),
                   ),
-                  onTap: () {},
                 ),
               ),
-            )
-          ],
+              20.verticalSpace,
+              Expanded(
+                child: ListView.separated(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.zero,
+                  itemCount: 10,
+                  separatorBuilder: (context, index) => Divider(
+                    color: const Color(0xFF2C2C2E),
+                    height: 1,
+                    indent: 75,
+                    endIndent: 5,
+                  ),
+                  itemBuilder: (context, index) => ListTile(
+                    contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
+                    leading: Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF4B9AFE).withOpacity(0.15),
+                        shape: BoxShape.circle,
+                      ),
+                      padding: const EdgeInsets.all(12),
+                      child: const Icon(
+                        Icons.person, 
+                        color: Color(0xFF4B9AFE),
+                        size: 26,
+                      ),
+                    ),
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'John Doe',
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 15,
+                          ),
+                        ),
+                        Text(
+                          '2m ago',
+                          style: GoogleFonts.poppins(
+                            color: const Color(0xFF8E8E93),
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                    subtitle: Padding(
+                      padding: const EdgeInsets.only(top: 6.0),
+                      child: Text(
+                        'Hey, how are you?',
+                        style: GoogleFonts.poppins(
+                          color: const Color(0xFFAFAFAF),
+                          fontSize: 13,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    onTap: () {},
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
