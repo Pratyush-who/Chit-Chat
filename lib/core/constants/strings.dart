@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 const logo = "assets/logo.png";
 const bg = "assets/bg.jpg";
 
@@ -12,3 +10,4 @@ const login = '/login';
 
 const home = '/home';
 const wrapper = '/wrapper';
+const chatRoom = '/chat_room';

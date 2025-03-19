@@ -1,3 +1,4 @@
+import 'package:firebasechat/ui/screens/chat_room/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -31,25 +32,12 @@ class _ChatsListScreenState extends State<ChatListScreen> {
                       color: Colors.white,
                     ),
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF2C2C2E),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: IconButton(
-                      icon: const Icon(
-                        Icons.add_comment_outlined,
-                        color: Color(0xFF4B9AFE), 
-                      ),
-                      onPressed: () {},
-                    ),
-                  )
                 ],
               ),
               20.verticalSpace,
               Container(
                 decoration: BoxDecoration(
-                  color: const Color(0xFF1E1E1E), 
+                  color: const Color(0xFF1E1E1E),
                   borderRadius: BorderRadius.circular(15),
                   border: Border.all(color: const Color(0xFF303030), width: 1),
                 ),
@@ -61,7 +49,8 @@ class _ChatsListScreenState extends State<ChatListScreen> {
                       color: const Color(0xFF8E8E93),
                       fontSize: 14,
                     ),
-                    prefixIcon: const Icon(Icons.search, color: Color(0xFF8E8E93)),
+                    prefixIcon:
+                        const Icon(Icons.search, color: Color(0xFF8E8E93)),
                     filled: false,
                     contentPadding: const EdgeInsets.symmetric(vertical: 14),
                     border: OutlineInputBorder(
@@ -84,7 +73,8 @@ class _ChatsListScreenState extends State<ChatListScreen> {
                     endIndent: 5,
                   ),
                   itemBuilder: (context, index) => ListTile(
-                    contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
+                    contentPadding:
+                        const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
                     leading: Container(
                       decoration: BoxDecoration(
                         color: const Color(0xFF4B9AFE).withOpacity(0.15),
@@ -92,7 +82,7 @@ class _ChatsListScreenState extends State<ChatListScreen> {
                       ),
                       padding: const EdgeInsets.all(12),
                       child: const Icon(
-                        Icons.person, 
+                        Icons.person,
                         color: Color(0xFF4B9AFE),
                         size: 26,
                       ),
@@ -118,18 +108,35 @@ class _ChatsListScreenState extends State<ChatListScreen> {
                       ],
                     ),
                     subtitle: Padding(
-                      padding: const EdgeInsets.only(top: 6.0),
-                      child: Text(
-                        'Hey, how are you?',
-                        style: GoogleFonts.poppins(
-                          color: const Color(0xFFAFAFAF),
-                          fontSize: 13,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    onTap: () {},
+                        padding: const EdgeInsets.only(top: 6.0),
+                        child: Row(
+                          children: [
+                            Text(
+                              'Hey, how are you?',
+                              style: GoogleFonts.poppins(
+                                color: const Color(0xFFAFAFAF),
+                                fontSize: 13,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            SizedBox(
+                              width: 135,
+                            ),
+                            CircleAvatar(
+                              backgroundColor: Colors.blue,
+                              radius: 10,
+                              child: Text(
+                                '2',
+                                style: GoogleFonts.poppins(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            )
+                          ],
+                        )),
+                    onTap: () => Navigator.pushNamed(context, 'chat_room'),
                   ),
                 ),
               )

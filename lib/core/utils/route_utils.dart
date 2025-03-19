@@ -1,6 +1,7 @@
 import 'package:firebasechat/core/constants/strings.dart';
 import 'package:firebasechat/ui/screens/auth/login%20page/login.dart';
 import 'package:firebasechat/ui/screens/auth/signup%20page/signup.dart';
+import 'package:firebasechat/ui/screens/chat_room/chat_screen.dart';
 import 'package:firebasechat/ui/screens/home/home_screen.dart';
 import 'package:firebasechat/ui/screens/splashscreens/splash_screen.dart';
 import 'package:firebasechat/ui/screens/wrapper/wrapper.dart';
@@ -20,6 +21,8 @@ class RouteUtils {
         return MaterialPageRoute(builder: (context) => HomeScreen());
       case wrapper:
         return MaterialPageRoute(builder: (context) => Wrapper());
+      case '/chat_room':
+        return MaterialPageRoute(builder: (context) => ChatScreen());
       default:
         return MaterialPageRoute(
           builder: (context) => Scaffold(
