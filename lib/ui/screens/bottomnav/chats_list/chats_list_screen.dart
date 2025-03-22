@@ -1,3 +1,4 @@
+import 'package:firebasechat/core/constants/strings.dart';
 import 'package:firebasechat/ui/screens/chat_room/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -136,7 +137,7 @@ class _ChatsListScreenState extends State<ChatListScreen> {
                             )
                           ],
                         )),
-                    onTap: () => Navigator.pushNamed(context, 'chat_room'),
+                    onTap: () => Navigator.of(context).pushNamed(chatRoom),
                   ),
                 ),
               )

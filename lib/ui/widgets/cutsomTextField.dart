@@ -7,6 +7,7 @@ class CustomTextField extends StatefulWidget {
     this.onChanged,
     this.hintText,
     this.focusNode,
+    this.isChatText = false,
     this.isPassword = false,
     required this.icon,
   });
@@ -16,6 +17,7 @@ class CustomTextField extends StatefulWidget {
   final FocusNode? focusNode;
   final bool isPassword;
   final IconData icon;
+  final bool isChatText;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -31,14 +33,16 @@ class _CustomTextFieldState extends State<CustomTextField> {
       focusNode: widget.focusNode,
       obscureText: widget.isPassword ? _obscureText : false,
       decoration: InputDecoration(
-        prefixIcon: widget.icon != null
-            ? Icon(widget.icon, color: Colors.black54)
-            : null,
+        contentPadding: EdgeInsets.only(left: 12),
         filled: true,
-        fillColor: const Color.fromARGB(39, 144, 145, 152),
+        fillColor: widget.isChatText
+            ? Colors.white
+            : Color.fromARGB(39, 144, 145, 152),
         hintText: widget.hintText,
         hintStyle: TextStyle(color: Colors.black38),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.r)),
+        border: OutlineInputBorder(
+            borderRadius:
+                BorderRadius.circular(widget.isChatText ? 20.r : 10.r)),
         suffixIcon: widget.isPassword
             ? IconButton(
                 icon: Icon(
@@ -50,7 +54,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   });
                 },
               )
-            : null,
+            : Icon(widget.icon, color: Colors.black54), // Move the icon here
       ),
     );
   }

@@ -21,7 +21,7 @@ class RouteUtils {
         return MaterialPageRoute(builder: (context) => HomeScreen());
       case wrapper:
         return MaterialPageRoute(builder: (context) => Wrapper());
-      case '/chat_room':
+      case chatRoom:
         return MaterialPageRoute(builder: (context) => ChatScreen());
       default:
         return MaterialPageRoute(
