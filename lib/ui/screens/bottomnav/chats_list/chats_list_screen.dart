@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebasechat/core/constants/strings.dart';
-import 'package:firebasechat/ui/screens/chat_room/chat_screen.dart';
+import 'package:firebasechat/core/models/user_models.dart';
+import 'package:firebasechat/core/services/db_services.dart';
+import 'package:firebasechat/ui/screens/bottomnav/chats_list/chat_list_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,6 +15,17 @@ class ChatListScreen extends StatefulWidget {
 }
 
 class _ChatsListScreenState extends State<ChatListScreen> {
+  late final ChatListViewmodel _viewModel;
+
+  @override
+  void initState() {
+    super.initState();
+    _viewModel = ChatListViewmodel(
+      dbServices(),
+      FirebaseAuth.instance.currentUser,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +35,7 @@ class _ChatsListScreenState extends State<ChatListScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
             children: [
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -63,82 +77,108 @@ class _ChatsListScreenState extends State<ChatListScreen> {
               ),
               20.verticalSpace,
               Expanded(
-                child: ListView.separated(
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.zero,
-                  itemCount: 10,
-                  separatorBuilder: (context, index) => Divider(
-                    color: const Color(0xFF2C2C2E),
-                    height: 1,
-                    indent: 75,
-                    endIndent: 5,
-                  ),
-                  itemBuilder: (context, index) => ListTile(
-                    contentPadding:
-                        const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
-                    leading: Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF4B9AFE).withOpacity(0.15),
-                        shape: BoxShape.circle,
+                child: StreamBuilder<List<UserModel>>(
+                  stream: _viewModel.usersStream,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+
+                    if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return Center(
+                        child: Text(
+                          "No users found",
+                          style: GoogleFonts.poppins(color: Colors.white)),
+                      );
+                    }
+
+                    final users = snapshot.data!;
+
+                    return ListView.separated(
+                      physics: const BouncingScrollPhysics(),
+                      padding: EdgeInsets.zero,
+                      itemCount: users.length,
+                      separatorBuilder: (context, index) => Divider(
+                        color: const Color(0xFF2C2C2E),
+                        height: 1,
+                        indent: 75,
+                        endIndent: 5,
                       ),
-                      padding: const EdgeInsets.all(12),
-                      child: const Icon(
-                        Icons.person,
-                        color: Color(0xFF4B9AFE),
-                        size: 26,
-                      ),
-                    ),
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'John Doe',
-                          style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 15,
-                          ),
-                        ),
-                        Text(
-                          '2m ago',
-                          style: GoogleFonts.poppins(
-                            color: const Color(0xFF8E8E93),
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ),
-                    subtitle: Padding(
-                        padding: const EdgeInsets.only(top: 6.0),
-                        child: Row(
-                          children: [
-                            Text(
-                              'Hey, how are you?',
+                      itemBuilder: (context, index) {
+                        final user = users[index];
+                        return ListTile(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 4),
+                          leading: Container(
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF4B9AFE).withOpacity(0.15),
+                              shape: BoxShape.circle,
+                            ),
+                            padding: const EdgeInsets.all(12),
+                            child: Text(
+                              user.name?.isNotEmpty == true
+                                  ? user.name![0].toUpperCase()
+                                  : '?',
                               style: GoogleFonts.poppins(
-                                color: const Color(0xFFAFAFAF),
-                                fontSize: 13,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
                               ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
                             ),
-                            SizedBox(
-                              width: 135,
-                            ),
-                            CircleAvatar(
-                              backgroundColor: Colors.blue,
-                              radius: 10,
-                              child: Text(
-                                '2',
+                          ),
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                user.name ?? 'Unknown',
                                 style: GoogleFonts.poppins(
                                   color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 15,
+                                ),
+                              ),
+                              Text(
+                                '2m ago',
+                                style: GoogleFonts.poppins(
+                                  color: const Color(0xFF8E8E93),
                                   fontSize: 12,
                                 ),
                               ),
-                            )
-                          ],
-                        )),
-                    onTap: () => Navigator.of(context).pushNamed(chatRoom),
-                  ),
+                            ],
+                          ),
+                          subtitle: Padding(
+                            padding: const EdgeInsets.only(top: 6.0),
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Hey, how are you?',
+                                  style: GoogleFonts.poppins(
+                                    color: const Color(0xFFAFAFAF),
+                                    fontSize: 13,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                const SizedBox(width: 135),
+                                CircleAvatar(
+                                  backgroundColor: Colors.blue,
+                                  radius: 10,
+                                  child: Text(
+                                    '2',
+                                    style: GoogleFonts.poppins(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          onTap: () => Navigator.of(context).pushNamed(chatRoom),
+                        );
+                      },
+                    );
+                  },
                 ),
               )
             ],

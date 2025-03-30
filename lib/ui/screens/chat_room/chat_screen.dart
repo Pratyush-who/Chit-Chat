@@ -17,7 +17,7 @@ class _ChatScreenState extends State<ChatScreen> {
             EdgeInsets.only(left: 1.sw * 0.05, right: 1.sw * 0.05, top: 39.h),
         child: Column(
           children: [
-            buildHeader(name: "john"),
+            buildHeader(context,name: "john"),
             SizedBox(height: 10.h),
             Expanded(
               child: ListView.separated(
@@ -78,7 +78,7 @@ class ChatBubble extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'jcbabfojbo oohfioqioq h ijfij wkj kjf khrowhif  wi iuiu w h eh',
+              'jcbabfojbo ',
               style: TextStyle(
                 color: isCurrentUser ? const Color.fromARGB(255, 183, 182, 182) : Colors.white,
                 fontSize: 16.sp,
@@ -137,15 +137,18 @@ class bottomField extends StatelessWidget {
   }
 }
 
-Row buildHeader({String name = ""}) {
+Row buildHeader(BuildContext context, {String name = ""}) {
   return Row(
     children: [
-      Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8.r),
-          color: Colors.white.withOpacity(0.2),
+      InkWell(
+        onTap: () => Navigator.pop(context),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.r),
+            color: Colors.white.withOpacity(0.2),
+          ),
+          child: const Icon(Icons.arrow_back_ios),
         ),
-        child: const Icon(Icons.arrow_back_ios),
       ),
       SizedBox(width: 20),
       Text(
