@@ -1,9 +1,11 @@
+import 'package:firebasechat/core/models/user_models.dart';
 import 'package:firebasechat/ui/widgets/cutsomTextField.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
+  final UserModel receiver;
+  const ChatScreen({super.key, required this.receiver});
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
@@ -17,7 +19,7 @@ class _ChatScreenState extends State<ChatScreen> {
             EdgeInsets.only(left: 1.sw * 0.05, right: 1.sw * 0.05, top: 39.h),
         child: Column(
           children: [
-            buildHeader(context,name: "john"),
+            buildHeader(context, name: widget.receiver.name ?? 'Unknown'),
             SizedBox(height: 10.h),
             Expanded(
               child: ListView.separated(
@@ -80,7 +82,9 @@ class ChatBubble extends StatelessWidget {
             Text(
               'jcbabfojbo ',
               style: TextStyle(
-                color: isCurrentUser ? const Color.fromARGB(255, 183, 182, 182) : Colors.white,
+                color: isCurrentUser
+                    ? const Color.fromARGB(255, 183, 182, 182)
+                    : Colors.white,
                 fontSize: 16.sp,
               ),
             ),
@@ -89,7 +93,9 @@ class ChatBubble extends StatelessWidget {
             ),
             Text('21:21 PM',
                 style: TextStyle(
-                  color: isCurrentUser ? const Color.fromARGB(255, 196, 195, 195) : Colors.white,
+                  color: isCurrentUser
+                      ? const Color.fromARGB(255, 196, 195, 195)
+                      : Colors.white,
                   fontSize: 12.sp,
                 )),
           ],

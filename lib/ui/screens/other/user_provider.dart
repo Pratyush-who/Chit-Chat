@@ -22,4 +22,8 @@ class UserProvider extends ChangeNotifier {
       print("No user data found for UID: $uid");
     }
   }
+  clearUser() { 
+    currentUser = null;
+    notifyListeners();
+  }
 }

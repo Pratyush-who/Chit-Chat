@@ -57,7 +57,8 @@ class _ChatsListScreenState extends State<ChatListScreen> {
                   border: Border.all(color: const Color(0xFF303030), width: 1),
                 ),
                 child: TextField(
-                  style: const TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.white),
+                  onChanged: _viewModel.search,
                   decoration: InputDecoration(
                     hintText: 'Search messages...',
                     hintStyle: GoogleFonts.poppins(
@@ -86,9 +87,8 @@ class _ChatsListScreenState extends State<ChatListScreen> {
 
                     if (!snapshot.hasData || snapshot.data!.isEmpty) {
                       return Center(
-                        child: Text(
-                          "No users found",
-                          style: GoogleFonts.poppins(color: Colors.white)),
+                        child: Text("No users found",
+                            style: GoogleFonts.poppins(color: Colors.white)),
                       );
                     }
 
@@ -97,7 +97,7 @@ class _ChatsListScreenState extends State<ChatListScreen> {
                     return ListView.separated(
                       physics: const BouncingScrollPhysics(),
                       padding: EdgeInsets.zero,
-                      itemCount: users.length,
+                      itemCount: users.length, 
                       separatorBuilder: (context, index) => Divider(
                         color: const Color(0xFF2C2C2E),
                         height: 1,
@@ -174,7 +174,8 @@ class _ChatsListScreenState extends State<ChatListScreen> {
                               ],
                             ),
                           ),
-                          onTap: () => Navigator.of(context).pushNamed(chatRoom),
+                          onTap: () =>
+                              Navigator.of(context).pushNamed(chatRoom,arguments: user),
                         );
                       },
                     );

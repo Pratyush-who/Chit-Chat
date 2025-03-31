@@ -17,14 +17,31 @@ class ChatListViewmodel extends BaseView {
 
   Stream<List<UserModel>> get usersStream => _usersController.stream;
 
+  List<UserModel> _users = [];
+  List<UserModel> get filteredUsers => _filteredUsers;
+  List<UserModel> _filteredUsers = [];
+
+  search(String value) {
+    if (value.isEmpty) {
+      _filteredUsers = List.from(_users);
+    } else {
+      _filteredUsers = _users
+          .where((e) => e.name?.toLowerCase().contains(value.toLowerCase()) ?? false)
+          .toList();
+    }
+    _usersController.add(_filteredUsers);
+    notifyListeners();
+  }
+
   Future<void> fetchUser() async {
     try {
       if (_currentUser == null) return;
-      
+
       final res = await _db.fetchUsers(_currentUser!.uid);
       if (res != null) {
-        final users = res.map((e) => UserModel.fromMap(e)).toList();
-        _usersController.add(users);
+        _users = res.map((e) => UserModel.fromMap(e)).toList();
+        _filteredUsers = List.from(_users); // Initialize filteredUsers with all users
+        _usersController.add(_filteredUsers);
         notifyListeners();
       }
     } catch (e) {
