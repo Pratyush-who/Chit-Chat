@@ -3,9 +3,11 @@ import 'package:firebasechat/core/constants/strings.dart';
 import 'package:firebasechat/core/models/user_models.dart';
 import 'package:firebasechat/core/services/db_services.dart';
 import 'package:firebasechat/ui/screens/bottomnav/chats_list/chat_list_viewmodel.dart';
+import 'package:firebasechat/ui/screens/other/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class ChatListScreen extends StatefulWidget {
   const ChatListScreen({super.key});
@@ -28,6 +30,7 @@ class _ChatsListScreenState extends State<ChatListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final currentUser = Provider.of<UserProvider>(context).user;
     return Scaffold(
       backgroundColor: const Color(0xFF121212),
       body: SafeArea(
@@ -97,7 +100,7 @@ class _ChatsListScreenState extends State<ChatListScreen> {
                     return ListView.separated(
                       physics: const BouncingScrollPhysics(),
                       padding: EdgeInsets.zero,
-                      itemCount: users.length, 
+                      itemCount: users.length,
                       separatorBuilder: (context, index) => Divider(
                         color: const Color(0xFF2C2C2E),
                         height: 1,
@@ -174,8 +177,8 @@ class _ChatsListScreenState extends State<ChatListScreen> {
                               ],
                             ),
                           ),
-                          onTap: () =>
-                              Navigator.of(context).pushNamed(chatRoom,arguments: user),
+                          onTap: () => Navigator.of(context)
+                              .pushNamed(chatRoom, arguments: user),
                         );
                       },
                     );

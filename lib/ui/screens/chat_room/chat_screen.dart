@@ -1,7 +1,11 @@
 import 'package:firebasechat/core/models/user_models.dart';
+import 'package:firebasechat/core/services/chat_service.dart';
+import 'package:firebasechat/ui/screens/chat_room/chat_view.model.dart';
+import 'package:firebasechat/ui/screens/other/user_provider.dart';
 import 'package:firebasechat/ui/widgets/cutsomTextField.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class ChatScreen extends StatefulWidget {
   final UserModel receiver;
@@ -13,31 +17,45 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding:
-            EdgeInsets.only(left: 1.sw * 0.05, right: 1.sw * 0.05, top: 39.h),
-        child: Column(
-          children: [
-            buildHeader(context, name: widget.receiver.name ?? 'Unknown'),
-            SizedBox(height: 10.h),
-            Expanded(
-              child: ListView.separated(
-                itemBuilder: (context, index) {
-                  return ChatBubble(isCurrentUser: true);
-                },
-                separatorBuilder: (context, index) {
-                  return SizedBox(height: 10.h);
-                },
-                itemCount: 10,
+    final currentUser = Provider.of<UserProvider>(context).user;
+    return ChangeNotifierProvider(
+      create: (context) => ChatViewModel(
+        ChatService(),
+        currentUser!,
+        widget.receiver,
+      ),
+      child: Consumer<ChatViewModel>(
+        builder: (context, model, _) {
+          return Scaffold(
+            body: Padding(
+              padding: EdgeInsets.only(
+                  left: 1.sw * 0.05, right: 1.sw * 0.05, top: 39.h),
+              child: Column(
+                children: [
+                  buildHeader(context, name: widget.receiver.name ?? 'Unknown'),
+                  SizedBox(height: 10.h),
+                  Expanded(
+                    child: ListView.separated(
+                      itemBuilder: (context, index) {
+                        return ChatBubble(isCurrentUser: true);
+                      },
+                      separatorBuilder: (context, index) {
+                        return SizedBox(height: 10.h);
+                      },
+                      itemCount: 10,
+                    ),
+                  ),
+                  bottomField(
+                    controller: model.controller,
+                    onTap: () {
+                      model.saveMessage();
+                    },
+                  )
+                ],
               ),
             ),
-            bottomField(
-              onChanged: (p0) {},
-              onTap: () {},
-            )
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -110,9 +128,11 @@ class bottomField extends StatelessWidget {
     super.key,
     this.onTap,
     this.onChanged,
+    this.controller,
   });
   final void Function()? onTap;
   final void Function(String)? onChanged;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -135,6 +155,7 @@ class bottomField extends StatelessWidget {
               icon: Icons.send,
               onChanged: onChanged,
               isChatText: true,
+              controller: controller,
             ),
           ),
         ],

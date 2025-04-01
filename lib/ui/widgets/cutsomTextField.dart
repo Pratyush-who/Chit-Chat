@@ -6,6 +6,7 @@ class CustomTextField extends StatefulWidget {
     super.key,
     this.onChanged,
     this.hintText,
+    this.controller,
     this.focusNode,
     this.isChatText = false,
     this.isPassword = false,
@@ -18,6 +19,7 @@ class CustomTextField extends StatefulWidget {
   final bool isPassword;
   final IconData icon;
   final bool isChatText;
+  final TextEditingController? controller;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -29,6 +31,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: widget.controller,
       onChanged: widget.onChanged,
       focusNode: widget.focusNode,
       obscureText: widget.isPassword ? _obscureText : false,
