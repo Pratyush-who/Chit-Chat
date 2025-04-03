@@ -14,12 +14,13 @@ class ChatService {
     }
   }
 
-  Future<Stream<QuerySnapshot<Map<String, dynamic>>>> getMessages(
-      String chatRoomId) async {
-    return _fire
-        .collection("chatRooms")
-        .doc(chatRoomId)
-        .collection("messages")
-        .snapshots();
-  }
+  Stream<QuerySnapshot<Map<String, dynamic>>> getMessages(String chatRoomId) {
+  return _fire
+      .collection("chatRooms")
+      .doc(chatRoomId)
+      .collection("messages")
+      .orderBy("timestamp", descending: true) // Ensure messages are sorted
+      .snapshots();
+}
+
 }

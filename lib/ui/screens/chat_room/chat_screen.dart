@@ -1,3 +1,4 @@
+import 'package:firebasechat/core/models/message_modal.dart';
 import 'package:firebasechat/core/models/user_models.dart';
 import 'package:firebasechat/core/services/chat_service.dart';
 import 'package:firebasechat/ui/screens/chat_room/chat_view.model.dart';
@@ -37,12 +38,16 @@ class _ChatScreenState extends State<ChatScreen> {
                   Expanded(
                     child: ListView.separated(
                       itemBuilder: (context, index) {
-                        return ChatBubble(isCurrentUser: true);
+                        final message = model.messages[index];
+                        final isCurrentUser =
+                            message.senderId == model.currentUser.uid;
+                        return ChatBubble(
+                            isCurrentUser: isCurrentUser, message: message);
                       },
                       separatorBuilder: (context, index) {
                         return SizedBox(height: 10.h);
                       },
-                      itemCount: 10,
+                      itemCount: model.messages.length,
                     ),
                   ),
                   bottomField(
@@ -65,8 +70,10 @@ class ChatBubble extends StatelessWidget {
   const ChatBubble({
     super.key,
     this.isCurrentUser = true,
+    required this.message,
   });
   final bool isCurrentUser;
+  final Message message;
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +105,7 @@ class ChatBubble extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'jcbabfojbo ',
+              message.content ?? '',
               style: TextStyle(
                 color: isCurrentUser
                     ? const Color.fromARGB(255, 183, 182, 182)
@@ -109,7 +116,7 @@ class ChatBubble extends StatelessWidget {
             SizedBox(
               height: 8,
             ),
-            Text('21:21 PM',
+            Text(message.timestamp.toString().substring(0, 11),
                 style: TextStyle(
                   color: isCurrentUser
                       ? const Color.fromARGB(255, 196, 195, 195)
